@@ -1,20 +1,19 @@
 from flask import Flask
 from flask import render_template
-from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 
+users = {}
 cart = {}
 
 @app.route('/')
 def hello_world():
     return render_template('index.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register_page():
     return render_template('register.html')
+
 
 @app.route('/order')
 def order_page():
