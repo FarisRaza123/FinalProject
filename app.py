@@ -15,20 +15,18 @@ def hello_world():
 def register_page():
     return render_template('register.html')
 
-@app.route('/your_flask_funtion')
-def get_ses():
-    cart = request.form['breadsticks']
-    print(cart)
-    return make_response('success.html', 200)
 
 @app.route('/order')
 def order_page():
     return render_template('order.html')
 
-@app.route('/success')
-def success_page():
-    cost = 15
-    return render_template('success.html', title='Welcome', username=cost)
+@app.route('/success', methods = ['POST', 'GET'])
+def success():
+   if request.method == 'POST':
+      result = request.form
+      cart = request.args.get('type')
+      print(cart)
+      return render_template("success.html", result = result)
 
 if __name__ == '__main__':
     app.run(debug=True)
