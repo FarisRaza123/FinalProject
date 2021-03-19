@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 """users = {'usernames':{'name':'bob'}
         'passwords':{'name':'spot'}}"""
-users = {'username' : {'name':'bob', 'place':'lawn', 'animal':'man'},
-              'password' : {'name':'spot', 'place':'bed', 'animal':'dog'}}
+users = {'username' : {'name':'bob'},
+              'password' : {'name':'spot'}}
 cart = {}
 
 @app.route('/')
@@ -17,7 +17,7 @@ def hello_world():
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
     return render_template('register.html')
-    print(dict_names)
+    print(users)
 
 
 @app.route('/order')
@@ -28,7 +28,8 @@ def order_page():
 def success():
    if request.method == 'POST':
       result = request.form
-      cart = request.args.get('type')
+      BowlofPasta = result.get('BowlsOfPasta')
+      print(result)
       print(cart)
       return render_template("success.html", result = result)
 
