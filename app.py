@@ -4,7 +4,10 @@ from flask import render_template, make_response
 
 app = Flask(__name__)
 
-users = {}
+"""users = {'usernames':{'name':'bob'}
+        'passwords':{'name':'spot'}}"""
+users = {'username' : {'name':'bob', 'place':'lawn', 'animal':'man'},
+              'password' : {'name':'spot', 'place':'bed', 'animal':'dog'}}
 cart = {}
 
 @app.route('/')
@@ -14,6 +17,7 @@ def hello_world():
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
     return render_template('register.html')
+    print(dict_names)
 
 
 @app.route('/order')
