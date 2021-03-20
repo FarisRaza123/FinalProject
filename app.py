@@ -2,12 +2,22 @@ from flask import Flask
 from flask import request
 from flask import render_template, make_response
 import sqlite3
-from sqlite3 import Error
 
-db = sqlite3.connect('/tmp/data.db')
-cur = db.cursor()
-createTable = "CREATE TABLE side_items(itemid, )"
-cur
+
+conn = sqlite3.connect('/tmp/data.db')
+
+c = conn.cursor()
+
+c.execute("""Create Table side_food (
+            first itemid,
+            last food_name,
+            price integer)""")
+
+c.execute("INSERT INTO side_food VALUES ('BowlsOfPasta', 'Bowls Of Pasta', 10.99)")
+
+conn.commit()
+conn.close()
+
 
 
 app = Flask(__name__)
