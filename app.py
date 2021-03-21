@@ -4,19 +4,6 @@ from flask import render_template, make_response
 import sqlite3
 
 
-conn = sqlite3.connect('/tmp/data.db')
-
-c = conn.cursor()
-
-c.execute("""Create Table side_food (
-            first itemid,
-            last food_name,
-            price integer)""")
-
-c.execute("INSERT INTO side_food VALUES ('BowlsOfPasta', 'Bowls Of Pasta', 10.99)")
-
-conn.commit()
-conn.close()
 
 
 
@@ -48,6 +35,54 @@ toppings = [
     {'itemid': 'olives', 'name': 'Olives', 'price': 2.99},
     {'itemid': 'pineapples', 'name': 'Pineapples', 'price': 3.99}
 ]
+
+
+conn = sqlite3.connect('/tmp/data.db')
+
+c = conn.cursor()
+
+c.execute("""CREATE TABLE IF NOT EXISTS "side_food" (
+                "sideid" TEXT,
+                "side_name" TEXT,
+                "side_price" NUMERIC
+            );""")
+
+c.executemany("""
+    INSERT INTO
+        side_food
+        (sideid, side_name, side_price)
+    VALUES
+        (:itemid, :name, :price)""", side_items)
+
+c.execute("""CREATE TABLE IF NOT EXISTS "pizza_sizes" (
+                "pizzaid" TEXT,
+                "pizza_name" TEXT,
+                "pizza_price" NUMERIC
+            );""")
+
+c.executemany("""
+    INSERT INTO
+        pizza_sizes
+        (pizzaid, pizza_name, pizza_price)
+    VALUES
+        (:itemid, :name, :price)""", pizzas)
+
+c.execute("""CREATE TABLE IF NOT EXISTS "pizza_toppings" (
+                "toppingsid" TEXT,
+                "toppings_name" TEXT,
+                "toppings_price" NUMERIC
+            );""")
+
+c.executemany("""
+    INSERT INTO
+        pizza_toppings
+        (toppingsid, toppings_name, toppings_price)
+    VALUES
+        (:itemid, :name, :price)""", toppings)
+
+conn.commit()
+conn.close()
+
 
 
 
