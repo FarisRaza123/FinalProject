@@ -36,8 +36,8 @@ toppings = [
     {'itemid': 'pineapples', 'name': 'Pineapples', 'price': 3.99}
 ]
 
-
-conn = sqlite3.connect('/tmp/data.db')
+#Needs to be changed with local user
+conn = sqlite3.connect('C:/Users/faris/Documents/School/Spring 2021/Programing/cis385_project-master/tmp/data.db')
 
 c = conn.cursor()
 
@@ -80,11 +80,9 @@ c.executemany("""
     VALUES
         (:itemid, :name, :price)""", toppings)
 
+
 conn.commit()
 conn.close()
-
-
-
 
 @app.route('/')
 def hello_world():
@@ -122,7 +120,13 @@ def success():
 
       total_cost_rounded = str(round(total_cost,2))
 
+
+
+
       return render_template("success.html", result=result, total=total_cost_rounded)
+
+
+
 
 
 if __name__ == '__main__':
